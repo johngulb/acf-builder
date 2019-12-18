@@ -131,12 +131,16 @@ class FieldsBuilder extends ParentDelegationBuilder implements NamedBuilder
     private function transformFields($fields)
     {
         $conditionalTransform = new Transform\ConditionalLogic($this);
-        $namespaceFieldKeyTransform = new Transform\NamespaceFieldKey($this);
 
-        return
-            $namespaceFieldKeyTransform->transform(
-                $conditionalTransform->transform($fields)
-            );
+        // This is a temporary change to this library to make the migration from the ACF UI, and existing acf blocks easier
+        // The exact keys must be able to be specified during block registration and not be namespaced
+        return $conditionalTransform->transform($fields);
+        // $namespaceFieldKeyTransform = new Transform\NamespaceFieldKey($this);
+        //
+        // return
+        //     $namespaceFieldKeyTransform->transform(
+        //         $conditionalTransform->transform($fields)
+        //     );
     }
 
     /**
